@@ -66,8 +66,7 @@ button:active {
     border-color: #1b4d1b; 
 }
 
-
-
+/* Bingo card styles */
 #bingo-card {
     display: grid;
     gap: 4px;
@@ -80,12 +79,11 @@ button:active {
     aspect-ratio: 1;
 }
 
-
 #bingo-card textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #ddd; /* Light border around text areas */
+    border: 2px solid #ddd; 
     font-weight: bold;
     font-size: 18px;
     background: white;
@@ -102,11 +100,11 @@ button:active {
 
 #bingo-card textarea:focus {
     outline: none;
-    border-color: #2c6e2f; /* Focused border in dark green */
+    border-color: #2c6e2f;
 }
 
 #bingo-card textarea:hover {
-    background: #b2e8b1; /* Light green hover effect */
+    background: #b2e8b1;
     transition: 0.3s ease-in-out;
 }
 
