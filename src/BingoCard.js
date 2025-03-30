@@ -142,3 +142,4 @@ const BingoCard = () => {
 export default BingoCard;
 
 // Good board background color: #5C4033
+// Deployment: https://charlieiq.github.io/bingo-customizer
