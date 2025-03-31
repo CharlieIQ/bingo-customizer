@@ -102,11 +102,11 @@ button:active {
 
 #bingo-card textarea:focus {
     outline: none;
-    border-color: #2c6e2f;
+    border-color: #000000;
 }
 
 #bingo-card textarea:hover {
-    background: #b2e8b1;
+    background: #000000;
     transition: 0.3s ease-in-out;
 }
 
