@@ -9,6 +9,8 @@ const BingoCard = () => {
     const [grid, setGrid] = useState(
         Array(5).fill(null).map(() => Array(5).fill(""))
     );
+    // For printing grid items
+    const [showList, setShowList] = useState(false);
     // Custom grid background color
     const [bgColor, setBgColor] = useState("#ffffff");
 
@@ -81,6 +83,8 @@ const BingoCard = () => {
         });
     };
 
+    const bingoText = grid.flat().join(", ");
+
     return (
         <div className="flex flex-col items-center p-6 min-h-screen bg-gray-100 text-gray-900">
             <h1 className="text-5xl font-bold mb-4">Bingo Card Maker</h1>
@@ -135,6 +139,21 @@ const BingoCard = () => {
                 onChange={(e) => setBgColor(e.target.value)}
                 className="m-2"
             />
+
+            <div className="text-center">
+                <button
+                    onClick={() => setShowList(!showList)}
+                    className="bg-blue-500 text-white p-2 m-2 rounded-lg shadow-md hover:bg-blue-600"
+                >
+                    {showList ? "Hide Bingo List" : "Show Bingo List"}
+                </button>
+
+                {showList && (
+                    <div className="mt-4 p-4 bg-white text-gray-900 rounded-lg shadow-lg">
+                        <p>{bingoText}</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
