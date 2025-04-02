@@ -13,6 +13,9 @@ const BingoCard = () => {
     const [showList, setShowList] = useState(false);
     // Custom grid background color
     const [bgColor, setBgColor] = useState("#ffffff");
+    // For the word list input
+    const [wordListInput, setWordListInput] = useState("");
+
 
     /**
      * Function to change inputs in cells
@@ -35,6 +38,31 @@ const BingoCard = () => {
 
         // Update the state with the new grid
         setGrid(updatedGrid);
+    };
+
+    /**
+     * Function to fill the grid with words from the text input
+     */
+    const fillGridFromWordList = () => {
+        // Split the input by commas and trim whitespace from each item
+        let words = wordListInput.split(',').map(word => word.trim()).filter(word => word !== "");
+
+        // Check if theres enough words
+        if (words.length < gridSize * gridSize) {
+            alert("Not enough words!");
+            return;
+        }
+
+        // Fill the grid with the words
+        const newGrid = Array(gridSize).fill(null).map((_, rowIndex) =>
+            Array(gridSize).fill(null).map((_, colIndex) => {
+                const index = rowIndex * gridSize + colIndex;
+                return index < words.length ? words[index] : "";
+            })
+        );
+
+        // Update the grid state
+        setGrid(newGrid);
     };
 
     /**
@@ -85,9 +113,17 @@ const BingoCard = () => {
 
     const bingoText = grid.flat().join(", ");
 
+    /**
+     * Update the word list based on the current grid
+     */
+    const updateWordListFromGrid = () => {
+        const words = grid.flat().filter(word => word.trim() !== "");
+        setWordListInput(words.join(", "));
+    };
+
     return (
         <div className="flex flex-col items-center p-6 min-h-screen bg-gray-100 text-gray-900">
-            <h1 className="text-5xl font-bold mb-4">Bingo Card Maker</h1>
+            <h1 className="text-10xl font-bold mb-4" id="bingoMainHeader">Bingo Card Maker</h1>
             <h3>Enter card size:</h3>
             <input
                 type="number"
@@ -132,6 +168,29 @@ const BingoCard = () => {
             <button onClick={handleDownload} className="bg-green-500 text-white p-2 m-2 rounded-lg shadow-md hover:bg-green-600">
                 Download board as PNG
             </button>
+
+            <h3 className="text-xl font-semibold mb-2">Enter your word list:</h3>
+            <textarea
+                value={wordListInput}
+                onChange={(e) => setWordListInput(e.target.value)}
+                placeholder="Enter comma-separated words or phrases (e.g. word1, word2, phrase 3, etc.)"
+                className="w-full h-32 p-2 border rounded-lg"
+            />
+            <div className="flex justify-between mt-2">
+                <button
+                    onClick={fillGridFromWordList}
+                    className="bg-purple-500 text-white p-2 rounded-lg shadow-md hover:bg-purple-600"
+                >
+                    Fill Grid with Words
+                </button>
+                <button
+                    onClick={updateWordListFromGrid}
+                    className="bg-gray-500 text-white p-2 rounded-lg shadow-md hover:bg-gray-600"
+                >
+                    Update List from Grid
+                </button>
+            </div>
+
             <br /><h2>Choose a board color:</h2>
             <input
                 type="color"
@@ -145,7 +204,7 @@ const BingoCard = () => {
                     onClick={() => setShowList(!showList)}
                     className="bg-blue-500 text-white p-2 m-2 rounded-lg shadow-md hover:bg-blue-600"
                 >
-                    {showList ? "Hide Bingo List" : "Show Bingo List"}
+                    {showList ? "Hide Bingo Words List" : "Show Bingo Words List"}
                 </button>
 
                 {showList && (
